@@ -18,13 +18,11 @@ def index(request):
             the_form.save()
 
     if request.user.is_authenticated:
-        print("Onto getting home page")
         context = {}
         context['userResultList'] = []
         user_searches = Search.objects.filter(user_id=request.user.id)
         count = 0
         for item in user_searches:
-            print(item.url)
             res = {}
             res['keyword'] = item.keyword
             res['url'] = item.url
@@ -35,8 +33,6 @@ def index(request):
             context['userResultList'].append(res)
             count += 3
 
-        context['testText'] = "new text."
-        #context['userResultList'].append(res)
         return render(request, 'home.html', context)
     else:
         return render(request, 'externalhome.html', {})

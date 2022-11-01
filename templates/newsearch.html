@@ -4,15 +4,16 @@
 
 {% block content %}
     <h1>This is the new search page</h1>
+
     <form action="/" method="post">
         {% csrf_token %}
-        {{ form }}
-        <!--
-        <label for="keyword">Keyword:</label>
-        <input type="text" id="keyword" name="keyword"><br><br>
-        <label for="url">URL:</label>
-        <input type="text" id="url" name="url"><br><br>
-        -->
+        {% for field in form %}
+            {% if field.html_name == "state" %}
+                <div>Enable Search? {{ field }}</div>
+            {% else %}
+                <div>{{ field.label_tag }}{{ field }} </div>
+            {% endif %}
+        {% endfor %}
         <input type="submit" value="Create">
 
     </form>

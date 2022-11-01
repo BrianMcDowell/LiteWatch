@@ -20,7 +20,8 @@ class Search(models.Model):
 
 class Result(models.Model):
     sourceSearch = models.ForeignKey(Search, on_delete=models.CASCADE)
-    # url = models.CharField(max_length = 255) # This is the specific url where the keyword was found
-    # notification = models.BooleanField(default=False) # Can be used to mark whether a result has been sent to the user
+    url = models.CharField(max_length = 255, default="EMPTY URL") # This is the specific url where the keyword was found
+    sent = models.BooleanField(default=False) # Can be used to mark whether a result has been sent to the user
+    sample = models.TextField(default="")
 
 
