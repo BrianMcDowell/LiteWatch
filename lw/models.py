@@ -14,12 +14,13 @@ class Search(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     keyword = models.CharField(max_length=20)
     url = models.CharField(max_length=50)
-    dateCreated = models.DateField()
+    dateCreated = models.DateField(auto_now_add=True)
+    state = models.BooleanField(default=True)
 
 
 class Result(models.Model):
     sourceSearch = models.ForeignKey(Search, on_delete=models.CASCADE)
     # url = models.CharField(max_length = 255) # This is the specific url where the keyword was found
-    # notification = models.BooleanField() # Can be used to mark whether a result has been sent to the user
+    # notification = models.BooleanField(default=False) # Can be used to mark whether a result has been sent to the user
 
 

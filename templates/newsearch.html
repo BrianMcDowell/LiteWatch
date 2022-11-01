@@ -4,13 +4,20 @@
 
 {% block content %}
     <h1>This is the new search page</h1>
-    <form>
+    <form action="/" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <!--
         <label for="keyword">Keyword:</label>
         <input type="text" id="keyword" name="keyword"><br><br>
         <label for="url">URL:</label>
         <input type="text" id="url" name="url"><br><br>
-        <input type="submit" value="newsearch">
+        -->
+        <input type="submit" value="Create">
+
     </form>
+
+    <p>Some instructions to help the user create a new search</p>
 
 {% endblock %}
 
