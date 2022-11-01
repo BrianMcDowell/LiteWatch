@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block style %}{% endblock %}
+{% block title %}New Search{% endblock %}
+
+{% block content %}
+    <h1>This is the new search page</h1>
+    <form>
+        <label for="keyword">Keyword:</label>
+        <input type="text" id="keyword" name="keyword"><br><br>
+        <label for="url">URL:</label>
+        <input type="text" id="url" name="url"><br><br>
+        <input type="submit" value="newsearch">
+    </form>
+
+{% endblock %}
+
