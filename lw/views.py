@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader, RequestContext
-from .forms import NewSearchForm
+from .forms import NewSearchForm, UserRegisterForm
 from .models import Search
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404
 # Create your views here.
 
@@ -44,9 +45,27 @@ def login(request):
     return HttpResponse(template.render())
 
 
+def register(request):
+    # https://www.krazyprogrammer.com/2021/01/django-user-registration-in-pycharm.html
+    # https://www.geeksforgeeks.org/django-sign-up-and-login-with-confirmation-email-python/
+    if request.method == "POST":
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
+            return redirect('login')
+            #template = loader.get_template('registration/login.html')
+            # return HttpResponse(template.render())
+            return render(request, 'registration.html', {'form': form, 'msg': "Registered Successfully"})
+    else:
+        form = UserRegisterForm()
+    return render(request, 'registration.html', {'form': form})
+
+
 def newsearch(request):
     form = NewSearchForm()
-    return render(request, 'newsearch.html', {'form':form})
+    return render(request, 'newsearch.html', {'form': form})
 
 
 def instructionpage(request):
