@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        body {background-color: #7066F7;}
-        h1 {color: orange;}
-        body{
-        font-family: 'Trebuchet MS', sans-serif;
-   </style>
-</head>
-<body>
+{% extends "base.html" %}
+
+
+{% block style %}{% endblock %}
+
+
+{% block content %}
     <h1>About LiteWatch Web Crawler</h1>
     <p>LiteWatch is a web-crawler program where it surfs through the valid websites and notifies the user of
     keyword matches it registers.</p>
@@ -20,7 +16,6 @@
     <li><b>Transcribe - Record matching hits</b></li>
     <li><b>Enunciate - Report Findings to user</b></li>
 </ul>
+{% endblock %}
 
-</body>
-</html>
 
