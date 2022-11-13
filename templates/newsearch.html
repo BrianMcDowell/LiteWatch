@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block style %}{% endblock %}
+{% block title %}New Search{% endblock %}
+
+{% block content %}
+    <h1>This is the new search page</h1>
+
+    <form action="/" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            {% if field.html_name == "state" %}
+                <div>Enable Search? {{ field }}</div>
+            {% else %}
+                <div>{{ field.label_tag }}{{ field }} </div>
+            {% endif %}
+        {% endfor %}
+        <input type="submit" value="Create">
+
+    </form>
+
+    <p>Some instructions to help the user create a new search</p>
+
+{% endblock %}
+

@@ -1,7 +1,48 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
-<body>
+{% block style %}
+    table {
+        border: 1px solid #333;
+    }
+{% endblock %}
+{% block title %}LiteWatch{% endblock %}
+
+{% block allmenuitems %}
+    {% if user.is_authenticated %}
+        <a href="instructionpage">Instruction</a>
+
+    {%  else %}
+        <a>Dasit</a>
+    {%  endif %}
+{%  endblock %}
+
 {% block content %}
-    <h1>This is the homepage</h1>
+    <h1>This is a user's internal homepage</h1>
+    <p><form action="newsearch"><button type="submit">Create New Search</button></form></p>
+    {{ testText }}
+    <div>
+    <table>
+        <tr>
+            <th>Keyword</th>
+            <th>URL</th>
+            <th>Date Created</th>
+            <th># of Results</th>
+            <th>Result IDs</th>
+            <th>Status</th>
+        </tr>
+        {% for res in userResultList %}
+            <tr>
+                <td>{{ res.keyword }}</td>
+                <td>{{ res.url }}</td>
+                <td>{{ res.dateCreated }}</td>
+                <td>{{ res.hits }}</td>
+                <td>{{ res.hitIds }}</td>
+                <td>{{ res.state }}</td>
+                <!-- button or new web page to change state -->
+            </tr>
+        {% endfor %}
+    </table>
+    </div>
+
+    </table>
 {% endblock %}
 

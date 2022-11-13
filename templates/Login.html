@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <style>
+       body {background-color: #66ff66;}
+       h1 {color: black;}
+
+       body{
+       font-family: 'Trebuchet MS', sans-serif;
+       }
+
+      .cancelButton{
+      width: auto;
+      padding: 9px 17px;
+      margin: 11px 5px;
+     }
+
+     input[type=text], input[type=password]{
+      width:100%;
+      margin: 9px 0;
+      padding: 13px 12px;
+      display: inline-block;
+      border: 2px solid blue;
+      box-sizing: border-box;
+      }
+
+      .container{
+      padding: 20px;
+      background-color: lightblue;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <title>LITEWATCH -- LOGIN/REGISTER</title>
+</head>
+<body>
+
+  <center><h1>LiteWatch Login</h1></center>
+<form>
+    <div class="container">
+    <label>Username: </label>
+    <input type="text" placeholder="Enter Username" name="username" required>
+    <label>Password: </label>
+    <input id="password" type="password" placeholder="Enter Password" name="password" required>
+    <button type="submit">Login</button>
+    <input type="checkbox" checked="checked"> Remember my credentials
+    <button type="button" class="cancelButton"> Cancel </button>
+  </div>
+</form>
+
+
+</body>
+</html>
