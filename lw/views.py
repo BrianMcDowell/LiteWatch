@@ -13,6 +13,8 @@ from .crawl import collect  # TODO remove this when CRON task is added to crawl.
 
 def index(request):
 
+    tempcrawltrigger()
+
     if request.method == "POST":
         form = NewSearchForm(request.POST or None)
         if not form.is_valid(): print(form.errors)
@@ -74,10 +76,11 @@ def newsearch(request):
 def instructionpage(request):
     return render(request, 'externalhome.html', {})
 
-# TODO This block will move into a CRON task at bottom of crawl.py. It is in views for
-# now to fire when loading the page for testing purposes
-# TODO url, search_word, div_id, and user should come from search table of database
-# TODO past_hits should come from results table of database
+def tempcrawltrigger():
+    # TODO This block will move into a CRON task at bottom of crawl.py. It is in views for
+    # now to fire when loading the page for testing purposes
+    # TODO url, search_word, div_id, and user should come from search table of database
+    # TODO past_hits should come from results table of database
     url = 'https://prodogsdirect.org.uk/category/dogs/'
     search_word = 'Bulldog'
     div_id = 'entry-summary'
