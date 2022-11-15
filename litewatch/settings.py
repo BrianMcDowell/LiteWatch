@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-d9#=!26mrxd*3v!iy)6263_^r$f+a7w8-%@9z#7l7nbw9=wnfk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [litewatch.herokuapp.com]
+ALLOWED_HOSTS = ['litewatch.herokuapp.com']
 
 
 # Application definition
