@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader, RequestContext
 from .forms import NewSearchForm, UserRegisterForm
-from .models import Search
+from .models import Search, Result
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404
@@ -13,7 +13,7 @@ from .crawl import collect  # TODO remove this when CRON task is added to crawl.
 
 def index(request):
 
-    tempcrawltrigger()
+    #tempcrawltrigger()
 
     if request.method == "POST":
         form = NewSearchForm(request.POST or None)
@@ -34,8 +34,12 @@ def index(request):
             res['url'] = item.url
             res['hits'] = count
             res['dateCreated'] = item.dateCreated
-            res['hitIds'] = "xyz123"
+            res['hitIds'] = []#"xyz123"
             res['state'] = "Enabled" if item.state else "Disabled"
+            res['id'] = item.id
+            search_results = Result.objects.filter(sourceSearch=item.id)
+            for result in search_results:
+                res['hitIds'].append(result.id)
             context['userResultList'].append(res)
             count += 3
 
@@ -71,6 +75,20 @@ def register(request):
 def newsearch(request):
     form = NewSearchForm()
     return render(request, 'newsearch.html', {'form': form})
+
+
+def removesearch(request, searchid):
+    this_search = Search.objects.get(id=searchid)
+    this_search.delete()
+    this_search.save
+    return redirect('index')
+
+
+def changesearchstate(request, searchid):
+    this_search = Search.objects.get(id=searchid)
+    this_search.state = True if this_search.state is False else False
+    this_search.save()
+    return redirect('index')
 
 
 def instructionpage(request):
