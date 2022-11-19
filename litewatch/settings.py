@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-d9#=!26mrxd*3v!iy)6263_^r$f+a7w8-%@9z#7l7nbw9=wnfk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['litewatch.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'litewatch.herokuapp.com']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'lw.apps.LwConfig',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -127,4 +128,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
-#AUTH_USER_MODEL = "lw.User"
+CRONJOBS = [
+    ('* */3 * * *', 'lw.cron.trigger')  # currently set to run once every 3 hours
+]
+# making changes? update crons with -> python manage.py crontab add
+# want to run manually instead of waiting for the clock?
+# get <hash> from -> python manage.py crontab show
+# run cron with -> python manage.py crontab run <hash>
+
+# AUTH_USER_MODEL = "lw.User"
