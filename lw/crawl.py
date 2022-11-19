@@ -13,11 +13,12 @@ def collect(url, search_word, div_id):
         for d in divs:
             if d.find_all('p', string=re.compile(search_word)):
                 anchor = d.find('a')
-                found.append((anchor['href'], anchor.get('title')))
+                found.append((anchor.get('title'), anchor['href']))
+                # found.append((anchor['href'], anchor.get('title')))
+                # the old way. Delete once the new way works
+
         return found
     except Exception as e:
         print(e)
         return False
 
-# TODO write CRON task here to collect search criteria from DB and run collect above
-# this will include evaluating past hits to determine if any new hits are reportable

@@ -6,11 +6,16 @@ from .models import Search
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404
+from .mail import send_mail
+from .cron import trigger
 
 # Create your views here.
 
 
 def index(request):
+
+    # trigger()  # way to debug cron functionality.
+    # Comment out or remove if not working on cron.
 
     if request.method == "POST":
         form = NewSearchForm(request.POST or None)
