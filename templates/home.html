@@ -37,7 +37,7 @@
                 <td>{{ res.hits }}</td>
                 <td>{{ res.hitIds }}</td>
                 <td><form action="{% url 'searchstate' searchid=res.id %}" method="get"><button type="submit">{{ res.state }}</button></form></td>
-                <td><form action="{% url 'removesearch' searchid=res.id %}" method="get"><button type="submit">Delete</button></form></td>
+                <td><form action="{% url 'removesearch' searchid=res.id %}" method="get"><button type="submit" onclick="return confirm('Are you sure?\nDeleting will remove this search and associated results forever.')">Delete</button></form></td>
                 <!-- button or new web page to change state -->
             </tr>
         {% endfor %}
