@@ -87,14 +87,14 @@ def removesearch(request, searchid):
     this_search = Search.objects.get(id=searchid)
     this_search.delete()
     this_search.save
-    return redirect('index')
+    return# redirect('index')
 
 
 def changesearchstate(request, searchid):
     this_search = Search.objects.get(id=searchid)
     this_search.state = True if this_search.state is False else False
     this_search.save()
-    return redirect('index')
+    return# redirect('index')
 
 
 def instructionpage(request):
