@@ -36,7 +36,19 @@
                 <td>{{ res.dateCreated }}</td>
                 <td>{{ res.hits }}</td>
                 <td>{{ res.hitIds }}</td>
-                <td>{{ res.state }}</td>
+                <td>
+                    <form action="/" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="changestate" value="{{ res.id }}">
+                        <button type="submit">{{ res.state }}</button></form>
+                </td>
+                <td>
+                    <form action="/" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="deletesearch" value="{{ res.id }}">
+                        <button type="submit" onclick="return confirm('Are you sure?\nDeleting will remove this search and associated results forever.')">Delete</button>
+                    </form>
+                </td>
                 <!-- button or new web page to change state -->
             </tr>
         {% endfor %}
