@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader, RequestContext
 from .forms import NewSearchForm, UserRegisterForm
 from .models import Search, Result
@@ -27,22 +27,23 @@ def index(request):
                 the_form = form.save(commit=False)
                 the_form.user_id = request.user.id
                 the_form.save()
+        return HttpResponseRedirect('/')
 
     if request.user.is_authenticated:
-        context = {}
-        context['userResultList'] = []
+        context = {'userResultList': []}
         user_searches = Search.objects.filter(user_id=request.user.id)
         count = 0
         for item in user_searches:
-            res = {}
-            res['keyword'] = item.keyword
-            res['url'] = item.url
-            res['hits'] = count
-            res['dateCreated'] = item.dateCreated
-            res['hitIds'] = []
-            res['state'] = "Enabled" if item.state else "Disabled"
-            res['id'] = item.id
+            res = {
+                'keyword': item.keyword,
+                'url': item.url,
+                'dateCreated': item.dateCreated,
+                'hitIds': [],
+                'state': "Enabled" if item.state else "Disabled",
+                'id': item.id
+                }
             search_results = Result.objects.filter(sourceSearch=item.id)
+            res['hits'] = len(search_results)
             for result in search_results:
                 res['hitIds'].append(result.id)
             context['userResultList'].append(res)
