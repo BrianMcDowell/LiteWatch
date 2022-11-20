@@ -16,12 +16,17 @@ def index(request):
     #tempcrawltrigger()
 
     if request.method == "POST":
-        form = NewSearchForm(request.POST or None)
-        if not form.is_valid(): print(form.errors)
-        if form.is_valid():
-            the_form = form.save(commit=False)
-            the_form.user_id = request.user.id
-            the_form.save()
+        if 'changestate' in request.POST.keys():
+            changesearchstate(request, request.POST['changestate'])
+        elif 'deletesearch' in request.POST.keys():
+            removesearch(request, request.POST['deletesearch'])
+        else:
+            form = NewSearchForm(request.POST or None)
+            if not form.is_valid(): print(form.errors)
+            if form.is_valid():
+                the_form = form.save(commit=False)
+                the_form.user_id = request.user.id
+                the_form.save()
 
     if request.user.is_authenticated:
         context = {}
@@ -34,7 +39,7 @@ def index(request):
             res['url'] = item.url
             res['hits'] = count
             res['dateCreated'] = item.dateCreated
-            res['hitIds'] = []#"xyz123"
+            res['hitIds'] = []
             res['state'] = "Enabled" if item.state else "Disabled"
             res['id'] = item.id
             search_results = Result.objects.filter(sourceSearch=item.id)
