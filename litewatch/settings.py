@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'lw.apps.LwConfig',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -127,4 +128,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
-#AUTH_USER_MODEL = "lw.User"
+CRONJOBS = [
+    ('* */3 * * *', 'lw.cron.trigger')  # currently set to run once every 3 hours
+]
+# making changes? update crons with -> python manage.py crontab add
+# want to run manually instead of waiting for the clock?
+# get <hash> from -> python manage.py crontab show
+# run cron with -> python manage.py crontab run <hash>
+
+# AUTH_USER_MODEL = "lw.User"
