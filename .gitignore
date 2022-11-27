@@ -82,3 +82,6 @@ fabric.properties
 # Other Idea file issues
 .idea/LiteWatch.iml
 .idea/misc.xml
+
+lw/config.py
+
