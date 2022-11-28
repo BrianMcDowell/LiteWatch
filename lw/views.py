@@ -22,6 +22,10 @@ def index(request):
             changesearchstate(request, request.POST['changestate'])
         elif 'deletesearch' in request.POST.keys():
             removesearch(request, request.POST['deletesearch'])
+        elif 'deleteaccount' in request.POST.keys():
+            check = deleteaccount(request, request.POST['usernamematch'])
+            if not check:
+                return render(request, 'useroptions.html', {'FailedDelete': True})
         else:
             form = NewSearchForm(request.POST or None)
             if not form.is_valid(): print(form.errors)
@@ -103,3 +107,21 @@ def instructionpage(request):
     return render(request, 'externalhome.html', {})
 
 
+def useroptions(request):
+    return render(request, 'useroptions.html', {})
+
+
+def deleteaccount(request, usernamematch):
+    thisuser = request.user.username
+    if usernamematch == thisuser:
+        try:
+            u = User.objects.get(username=thisuser)
+            u.delete()
+        except User.DoesNotExist:
+            # username does not match
+            return False
+    else:
+        # Some other error occurred if we get here
+        # Left this in to not stop the process
+        return False
+    return True
