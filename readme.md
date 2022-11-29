@@ -10,10 +10,12 @@ LiteWatch is built using Django.
 ## Local Installation
 1. Clone Repo
 2. Install modules (located in requirements.txt)
+    * django-crontab needs to be installed via pip in the litewatch environment
 3. Make django migrations (python ./manage.py migrate)
 
 ## Running Locally
-Running locally can vary by IDE/OS. If using PyCharm Professional, simply pressing run in the toolbar will start the server. The user may have to select the Python interpreter and edit the run configuration to run a Django server from the browser.
+Running locally can vary by IDE/OS. If using PyCharm Professional, simply pressing run in the toolbar will start the server. The user may have to select the Python interpreter and edit the run configuration to run a Django server from the browser when using PyCharm. 
+Otherwise, the steps are as follows:
 1. python ./manage.py runserver
 
 ## Heroku
