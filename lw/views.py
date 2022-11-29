@@ -13,6 +13,7 @@ from .cron import trigger
 
 
 def index(request):
+    """ The 'main' function. If request is POST, performs appropriate task and then circles back as GET"""
 
     # trigger()  # way to debug cron functionality.
     # Comment out or remove if not working on cron.
@@ -22,6 +23,10 @@ def index(request):
             changesearchstate(request, request.POST['changestate'])
         elif 'deletesearch' in request.POST.keys():
             removesearch(request, request.POST['deletesearch'])
+        elif 'deleteaccount' in request.POST.keys():
+            check = deleteaccount(request, request.POST['usernamematch'])
+            if not check:
+                return render(request, 'useroptions.html', {'FailedDelete': True})
         else:
             form = NewSearchForm(request.POST or None)
             if not form.is_valid(): print(form.errors)
@@ -52,17 +57,18 @@ def index(request):
             count += 3
 
         return render(request, 'home.html', context)
-    else:
-        return render(request, 'externalhome.html', {})
+    return render(request, 'externalhome.html', {})
 
 
 def login(request):
+    """ user login """
     # https://learndjango.com/tutorials/django-login-and-logout-tutorial
     template = loader.get_template('registration/login.html')
     return HttpResponse(template.render())
 
 
 def register(request):
+    """ Registers a new user """
     # https://www.krazyprogrammer.com/2021/01/django-user-registration-in-pycharm.html
     # https://www.geeksforgeeks.org/django-sign-up-and-login-with-confirmation-email-python/
     if request.method == "POST":
@@ -72,34 +78,53 @@ def register(request):
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
             return redirect('login')
-            #template = loader.get_template('registration/login.html')
-            # return HttpResponse(template.render())
-            return render(request, 'registration.html', {'form': form, 'msg': "Registered Successfully"})
     else:
         form = UserRegisterForm()
     return render(request, 'registration.html', {'form': form})
 
 
 def newsearch(request):
+    """ Adds a new search into the database. """
     form = NewSearchForm()
     return render(request, 'newsearch.html', {'form': form})
 
 
 def removesearch(request, searchid):
+    """ Deletes specific search. Causes cascading deletion of associated search results """
     this_search = Search.objects.get(id=searchid)
     this_search.delete()
     this_search.save
-    return# redirect('index')
 
 
 def changesearchstate(request, searchid):
+    """ Modifies the enable/disable state of a given search """
     this_search = Search.objects.get(id=searchid)
-    this_search.state = True if this_search.state is False else False
+    this_search.state = bool(not this_search.state)
     this_search.save()
-    return# redirect('index')
 
 
 def instructionpage(request):
+    """ External homepage and instruction page of LiteWatch """
     return render(request, 'externalhome.html', {})
 
 
+def useroptions(request):
+    """ Loads user options page where user can delete account """
+    return render(request, 'useroptions.html', {})
+
+
+def deleteaccount(request, usernamematch):
+    """ Function to delete user's account. Verifies text box input given """
+    thisuser = request.user.username
+    if usernamematch == thisuser:
+        try:
+            u = User.objects.get(username=thisuser)
+            u.delete()
+        except User.DoesNotExist:
+            # username does not match
+            return False
+    else:
+        # Some other error occurred if we get here
+        # Left this in to not stop the process
+        return False
+    return True
