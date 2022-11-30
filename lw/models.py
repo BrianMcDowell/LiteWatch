@@ -14,8 +14,8 @@ class Search(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     keyword = models.CharField(max_length=20)
     url = models.CharField(max_length=50)
-    elemtype = models.CharField(max_length=50)
-    elemattr = models.CharField(max_length=100)
+    elemtype = models.CharField(max_length=50, default='', blank=True)
+    elemattr = models.CharField(max_length=100, default='', blank=True)
     dateCreated = models.DateField(auto_now_add=True)
     state = models.BooleanField(default=True)
 
