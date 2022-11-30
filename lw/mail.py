@@ -7,9 +7,10 @@ try:  # This should run locally if config.py with key in same directory as this 
     from .config import API_key
     API_key = API_key
 except:  # This should run on GitHub Actions
-    API_key = os.environ['M_API_KEY']
+    API_key = os.environ['MAILGUN_API_KEY']
 # If this doesn't work, try Heroku Config Vars. This could be in second try/except block. See details at:
 # https://devcenter.heroku.com/articles/config-vars#accessing-config-var-values-from-code
+# Update 30 NOV: using github secret did not work. Now trying Heroku config var.
 
 mailgun_sender = 'sandbox5243c587fa544caa9915e96ddd99a4cd.mailgun.org'
 API_base_URL = 'https://api.mailgun.net/v3/sandbox5243c587fa544caa9915e96ddd99a4cd.mailgun.org'
