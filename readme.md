@@ -13,10 +13,25 @@ LiteWatch is built using Django.
     * django-crontab needs to be installed via pip in the litewatch environment
 3. Make django migrations (python ./manage.py migrate)
 
+## Database Setup for local testing
+These steps assume use of PostgreSQL database. The original web app used Heroku Postgres add-on 
+1. Create a config.py file in litewatch directory
+2. Enter the following attributes of the postgres database in config.py:
+> DATABASE_CONFIG = {
+>    'NAME': "ASSOCIATED NAME",
+>    'USER': "ASSOCIATED USER",
+>    'PASSWORD': "ASSOCIATED PASSWORD",
+>    'HOST': "HOST URL",
+>    'PORT':  "PORT NUMBER",
+> }
+
+
 ## Running Locally
 Running locally can vary by IDE/OS. If using PyCharm Professional, simply pressing run in the toolbar will start the server. The user may have to select the Python interpreter and edit the run configuration to run a Django server from the browser when using PyCharm. 
 Otherwise, the steps are as follows:
-1. python ./manage.py runserver
+1. python ./manage.py migrate
+    * Only necessary for first setup or after migrations were made
+2. python ./manage.py runserver
 
 ## Heroku
 https://litewatch.herokuapp.com/
