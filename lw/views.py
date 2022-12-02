@@ -13,11 +13,10 @@ from .cron import trigger
 
 
 def index(request):
-    """ The 'main' function. If request is POST, performs appropriate task and then circles back as GET"""
-
+    """The 'main' function. If request is POST, performs appropriate
+     task and then circles back as GET"""
     # trigger()  # way to debug cron functionality.
     # Comment out or remove if not working on cron.
-
     if request.method == "POST":
         if 'changestate' in request.POST.keys():
             changesearchstate(request, request.POST['changestate'])
@@ -29,7 +28,8 @@ def index(request):
                 return render(request, 'useroptions.html', {'FailedDelete': True})
         else:
             form = NewSearchForm(request.POST or None)
-            if not form.is_valid(): print(form.errors)
+            if not form.is_valid():
+                print(form.errors)
             if form.is_valid():
                 the_form = form.save(commit=False)
                 the_form.user_id = request.user.id
@@ -61,14 +61,14 @@ def index(request):
 
 
 def login(request):
-    """ user login """
+    """user login"""
     # https://learndjango.com/tutorials/django-login-and-logout-tutorial
     template = loader.get_template('registration/login.html')
     return HttpResponse(template.render())
 
 
 def register(request):
-    """ Registers a new user """
+    """Registers a new user"""
     # https://www.krazyprogrammer.com/2021/01/django-user-registration-in-pycharm.html
     # https://www.geeksforgeeks.org/django-sign-up-and-login-with-confirmation-email-python/
     if request.method == "POST":
@@ -84,37 +84,38 @@ def register(request):
 
 
 def newsearch(request):
-    """ Adds a new search into the database. """
+    """Adds a new search into the database"""
     form = NewSearchForm()
     return render(request, 'newsearch.html', {'form': form})
 
 
 def removesearch(request, searchid):
-    """ Deletes specific search. Causes cascading deletion of associated search results """
+    """Deletes specific search.
+    Causes cascading deletion of associated search results"""
     this_search = Search.objects.get(id=searchid)
     this_search.delete()
     this_search.save
 
 
 def changesearchstate(request, searchid):
-    """ Modifies the enable/disable state of a given search """
+    """Modifies the enable/disable state of a given search"""
     this_search = Search.objects.get(id=searchid)
     this_search.state = bool(not this_search.state)
     this_search.save()
 
 
 def instructionpage(request):
-    """ External homepage and instruction page of LiteWatch """
+    """External homepage and instruction page of LiteWatch"""
     return render(request, 'externalhome.html', {})
 
 
 def useroptions(request):
-    """ Loads user options page where user can delete account """
+    """Loads user options page where user can delete account"""
     return render(request, 'useroptions.html', {})
 
 
 def deleteaccount(request, usernamematch):
-    """ Function to delete user's account. Verifies text box input given """
+    """Function to delete user's account. Verifies text box input given"""
     thisuser = request.user.username
     if usernamematch == thisuser:
         try:

@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+import psycopg2
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -72,16 +74,28 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'litewatch.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    }
 }
+
+if os.environ.get('DATABASE_URL', None):
+    import dj_database_url
+    db_from_env = dj_database_url.config(default=os.environ.get("DATABASE_URL"), conn_max_age=600, ssl_require=True)
+    DATABASES['default'].update(db_from_env)
+else:
+    from .config import DATABASE_CONFIG
+    DATABASES['default'].update(DATABASE_CONFIG)
 
 
 # Password validation
