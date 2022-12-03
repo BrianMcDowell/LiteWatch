@@ -149,5 +149,3 @@ CRONJOBS = [
 # want to run manually instead of waiting for the clock?
 # get <hash> from -> python manage.py crontab show
 # run cron with -> python manage.py crontab run <hash>
-
-# AUTH_USER_MODEL = "lw.User"
