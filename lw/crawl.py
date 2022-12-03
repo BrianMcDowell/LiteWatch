@@ -4,6 +4,10 @@ import re
 
 
 def collect(url, search_word, div_id):
+    """
+    This function performs the webscraping for the project.
+    Called from cron.py and views.py
+    """
     try:
         soup = BeautifulSoup(requests.get(url).text, "html.parser")
         body = soup.body

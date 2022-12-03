@@ -7,7 +7,10 @@ from .models import AbstractUser
 
 
 def trigger():
-
+    """
+    Performs background search and notification functions
+    Called from CRONJOBS in settings.py
+    """
     users = User.objects.all()
     for u in users:
         username = u.username
@@ -15,15 +18,8 @@ def trigger():
         searches = Search.objects.all().filter(user=u.id)
 
         for s in searches:
-            # TODO validate this logical progression:
-            # 1. query list of users from db
-            # 2. iterate through u in users
-            #   2a. for u in users query list of Searches where Status = Enabled
-            #       and query list of results
-            #   3. iterate through s in searches
-            #   3a. load s into parameters below and run collect()
-
             """
+            sample data used for hardcode testing
             url = 'https://prodogsdirect.org.uk/category/dogs/'
             search_word = 'Bulldog'
             user = 'brianmcdowell@ufl.edu'
