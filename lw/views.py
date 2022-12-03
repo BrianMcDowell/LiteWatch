@@ -6,7 +6,6 @@ from .models import Search, Result
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404
-from .mail import send_mail
 from .cron import trigger
 
 # Create your views here.
@@ -15,7 +14,7 @@ from .cron import trigger
 def index(request):
     """ The 'main' function. If request is POST, performs appropriate task and then circles back as GET"""
 
-    # trigger()  # way to debug cron functionality.
+    trigger()  # way to debug cron functionality.
     # Comment out or remove if not working on cron.
 
     if request.method == "POST":

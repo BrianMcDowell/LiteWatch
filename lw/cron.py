@@ -42,8 +42,9 @@ def trigger():
                 message_html = ''
                 for f in found_word:
                     if f not in past_hits:
-                        message_html += f[0] + '\n'
-                        message_html += f[1] + '\n'
+                        message_html += '<h3>' + f[0] + '</h3>'
+                        link = '<a clicktracking="off" href="' + f[1] + '">'
+                        message_html += link + f[1] + '</a>'
                         r = Result(sourceSearch=s, sample=f[0], url=f[1], sent=True)
                         r.save()
                 if message_html:
