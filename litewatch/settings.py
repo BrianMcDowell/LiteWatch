@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+from sys import argv
 import psycopg2
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -88,14 +89,18 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
     }
 }
-
-if os.environ.get('DATABASE_URL', None):
-    import dj_database_url
-    db_from_env = dj_database_url.config(default=os.environ.get("DATABASE_URL"), conn_max_age=600, ssl_require=True)
-    DATABASES['default'].update(db_from_env)
+# https://medium.com/analytics-vidhya/provisioning-a-test-postgresql-database-on-heroku-for-your-django-app-febb2b5d3b29
+if 'test' in argv:
+    from .config import TEST_DATABASE_CONFIG
+    DATABASES['default'].update(TEST_DATABASE_CONFIG)
 else:
-    from .config import DATABASE_CONFIG
-    DATABASES['default'].update(DATABASE_CONFIG)
+    if os.environ.get('DATABASE_URL', None):
+        import dj_database_url
+        db_from_env = dj_database_url.config(default=os.environ.get("DATABASE_URL"), conn_max_age=600, ssl_require=True)
+        DATABASES['default'].update(db_from_env)
+    else:
+        from .config import DATABASE_CONFIG
+        DATABASES['default'].update(DATABASE_CONFIG)
 
 
 # Password validation
