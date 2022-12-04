@@ -27,6 +27,7 @@ def index(request):
             if not check:
                 return render(request, 'useroptions.html', {'FailedDelete': True})
         elif '_test' in request.POST.keys():
+            email = request.user.email
             # test crawler logic here
             initial = {
                 'keyword': request.POST['keyword'],
