@@ -38,8 +38,9 @@
                 <td>
                     <form action="/" method="POST">
                         {% csrf_token %}
-                        <input type="hidden"; class="theButton"; name="changestate" value="{{ res.id }}">
-                        <button type="submit" class="theButton">{{ res.state }}</button></form>
+                        <input type="hidden" name="changestate" value="{{ res.id }}">
+                        <button type="submit">{{ res.state }}</button>
+                    </form>
                 </td>
                 <td>
                     <form action="/" method="POST">
@@ -48,11 +49,9 @@
                         <button type="submit" class="theButton" onclick="return confirm('Are you sure?\nDeleting will remove this search and associated results forever.')">Delete</button>
                     </form>
                 </td>
-                <!-- button or new web page to change state -->
             </tr>
         {% endfor %}
     </table>
     </div>
 
 {% endblock %}
-
