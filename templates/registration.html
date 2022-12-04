@@ -3,11 +3,16 @@
 
 {% block content %}
 
-<h2>Register</h2>
+
+    <img src="LITEWATCH_logo.png" alt = "LITEWATCH LOGO" style="width: 200px;height: 200px; position:absolute; bottom: 0px; right: 0px;" >
+
+
+<h2>LITE-Register</h2>
+{{ msg }}
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit">Register</button>
+  <button type="submit" class="theButton">Register new Account</button>
 </form>
 
 

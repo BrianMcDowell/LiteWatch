@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from sys import argv
+import psycopg2
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -72,16 +75,36 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'litewatch.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    }
 }
+# https://medium.com/analytics-vidhya/provisioning-a-test-postgresql-database-on-heroku-for-your-django-app-febb2b5d3b29
+if 'test' in argv:
+    from .config import TEST_DATABASE_CONFIG
+    DATABASES['default'].update(TEST_DATABASE_CONFIG)
+else:
+    if os.environ.get('DATABASE_URL', None):
+        import dj_database_url
+        db_from_env = dj_database_url.config(
+            default=os.environ.get("DATABASE_URL"),
+            conn_max_age=600,
+            ssl_require=True
+        )
+        DATABASES['default'].update(db_from_env)
+    else:
+        from .config import DATABASE_CONFIG
+        DATABASES['default'].update(DATABASE_CONFIG)
 
 
 # Password validation
@@ -135,5 +158,3 @@ CRONJOBS = [
 # want to run manually instead of waiting for the clock?
 # get <hash> from -> python manage.py crontab show
 # run cron with -> python manage.py crontab run <hash>
-
-# AUTH_USER_MODEL = "lw.User"

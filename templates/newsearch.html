@@ -1,24 +1,35 @@
 {% extends "base.html" %}
+
 {% block style %}{% endblock %}
 {% block title %}New Search{% endblock %}
 
+
+
+
 {% block content %}
-    <h1>This is the new search page</h1>
+    <img src="LITEWATCH_logo.png" alt = "LITEWATCH LOGO" style="width: 200px;height: 200px; position:absolute; bottom: 0px; right: 0px;" >
+    <h1>Create a new Search</h1>
 
     <form action="/" method="post">
         {% csrf_token %}
         {% for field in form %}
             {% if field.html_name == "state" %}
-                <div>Enable Search? {{ field }}</div>
+                <div style = "font-weight: bolder">Enable your LITE search? {{ field }}</div>
             {% else %}
                 <div>{{ field.label_tag }}{{ field }} </div>
             {% endif %}
         {% endfor %}
         <input type="submit" value="Create">
-
+        <h3>Test Your Input:</h3>
+        <p><input type="submit" value="Test Input" name="_test"></p>
+        <p>Selecting the test button above will conduct a test run of the crawler. Check your inbox for results.</p>
     </form>
 
-    <p>Some instructions to help the user create a new search</p>
+    <p style = "font-size: large">Using LITEwatch is as easy as LITE work:</p>
+    <li> Enter your desired keyword on the search field above</li>
+    <li> Hit the "Create Button" to begin your webcrawling LITE-Search</li>
+    <li> Let LITEwatch do the searching for you.</li>
+    <li> Check your email if there has been any hits based on your desired keyword</li>
 
 {% endblock %}
 

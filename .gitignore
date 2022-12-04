@@ -84,5 +84,6 @@ fabric.properties
 .idea/misc.xml
 
 lw/config.py
+litewatch/config.py
 
 sendgrid.env
