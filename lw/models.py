@@ -17,6 +17,6 @@ class Search(models.Model):
 
 class Result(models.Model):
     sourceSearch = models.ForeignKey(Search, on_delete=models.CASCADE)
-    url = models.CharField(max_length = 255, default="EMPTY URL")
+    url = models.CharField(max_length=255, default="EMPTY URL")
     sent = models.BooleanField(default=False)
     sample = models.TextField(default="")

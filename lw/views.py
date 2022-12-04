@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from django.template import loader, RequestContext
+from django.template import loader
 from .forms import NewSearchForm, UserRegisterForm
 from .models import Search, Result
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import get_object_or_404
 from .mail import send_mail
 from .cron import trigger
 
