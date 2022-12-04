@@ -5,6 +5,13 @@ from sendgrid.helpers.mail import Mail
 
 # Secure API key as described here:
 # https://stackoverflow.com/questions/71504363/how-to-access-github-actions-environment-secrets-locally-and-remotely
+
+
+
+
+
+
+
 try:  # This should run locally if config.py with key in same directory as this file
     from .config import SG_FULL_API_KEY
     API_key = SG_FULL_API_KEY
