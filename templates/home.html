@@ -2,7 +2,6 @@
 {% block style %}
 
 {% endblock %}
-{% block title %}LiteWatch{% endblock %}
 
 {% block allmenuitems %}
     {% if user.is_authenticated %}
@@ -49,11 +48,12 @@
                     </form>
                 </td>
                 <!-- button or new web page to change state -->
+                <!-- Test the search criteria -->
             </tr>
         {% endfor %}
     </table>
     </div>
 
-    </table>
+    <button type="submit" class="theButton" onclick="return confirm('This is a test button. This will test the search criteria')">Test Search Criteria</button>
 {% endblock %}
 
