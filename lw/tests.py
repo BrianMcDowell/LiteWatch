@@ -36,6 +36,36 @@ from django.contrib.auth.models import User
 #Test 9 -- No results by typing gibberish on the webcrawler search
 #This test should "pass" if there are no generated results if gibberish is typed. It should match for words.
 
+def create_single_user_search_result():
+    user = User.objects.create(email="test@email.com", username='testuser', password="password")
+
+    search = [
+        Search.objects.create(keyword='testkeyword', url='www.test.com', user_id=user.id),
+        Search.objects.create(keyword='secondtestkeyword', url='www.secondtest.org', user_id=user.id)
+    ]
+    result = [
+        Result.objects.create(sample='testkeyword plus', url='www.test.com/blah', sourceSearch_id=search[0].id),
+        Result.objects.create(sample='secondtestkeyword and', url='www.secondtest.org', sourceSearch_id=search[1].id)
+    ]
+    return [user, search, result]
+
+
+def create_multiple_user_search_result():
+    user = [
+        User.objects.create(email="test@email.com", username='testuser', password="password"),
+        User.objects.create(email="anothertest@email.gov", username="seconduser", password="password2")
+    ]
+    search = [
+        Search.objects.create(keyword='testkeyword', url='www.test.com', user_id=user[0].id),
+        Search.objects.create(keyword='secondtestkeyword', url='www.secondtest.org', user_id=user[1].id)
+    ]
+    result = [
+        Result.objects.create(sample='testkeyword plus', url='www.test.com/blah', sourceSearch_id=search[0].id),
+        Result.objects.create(sample='secondtestkeyword and', url='www.secondtest.org', sourceSearch_id=search[1].id)
+    ]
+    return [user, search, result]
+
+
 class CreateSearchTest(TestCase):
     """
     Tests that new search is added to database
@@ -58,9 +88,10 @@ class CreateUserTest(TestCase):
     def createuser(self, newusername="NewUser",
                    newuseremail="new@user.email",
                    password="password"):
-        User.objects.create(username=newusername, email=newuseremail, password=password)
+        return User.objects.create(username=newusername, email=newuseremail, password=password)
     def testcreation(self):
-        self.createuser()
+        u = self.createuser()
+        self.assertTrue(isinstance(u, User))
         self.assertTrue(len(User.objects.filter(username="NewUser")) == 1)
         self.assertTrue(User.objects.get(username="NewUser").email == "new@user.email")
 
@@ -81,7 +112,6 @@ class UserToSearchForeignKeysTest(TestCase):
     def testforeignkey(self):
         thisuser = self.createuser()
         thissearch = self.createSearch()
-        print(thisuser)
         self.assertTrue(thissearch.user_id == thisuser.id)
 
 
@@ -89,6 +119,7 @@ class SearchToResultForeignKeyTest(TestCase):
     """
     Tests foreign keys. Result item should reference id of search
     """
+
     def createuser(self, thisuser="thisuser",
                    thisemail="this@email.com",
                    password="Password"):
