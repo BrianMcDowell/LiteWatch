@@ -2,12 +2,23 @@
 <html lang="en">
 <head>
       <style>
-       body {background-color: #66ff66;}
-       h1 {color: black;}
-
-       body{
-       font-family: 'Trebuchet MS', sans-serif;
-       }
+    body { /*Animation comes from: https://www.sliderrevolution.com/coding/css-background-patterns/ */
+        background: linear-gradient(-65deg, #dff024, #70d11b, #11f2ee, #3e7fc9);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+        height: 100vh;
+    }
+    @keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 
       .cancelButton{
       width: auto;
@@ -30,11 +41,13 @@
       }
     </style>
     <meta charset="UTF-8">
-    <title>LITEWATCH -- LOGIN/REGISTER</title>
+    <title>LITEwatch -- Login/Register</title>
 </head>
 <body>
 
   <center><h1>LiteWatch Login</h1></center>
+  <img src="LITEWATCH_logo.png" alt = "LITEWATCH LOGO" style="width: 200px;height: 200px; position:absolute; bottom: 0px; right: 0px;" >
+
 <form>
     <div class="container">
     <label>Username: </label>

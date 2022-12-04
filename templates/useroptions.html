@@ -2,7 +2,6 @@
 
 {% block title %}User Options{% endblock %}
 {% block script %}
-    <script>
     function myFunction() {
         var x = document.getElementById("deleteconfirmation");
         if (x.style.display === "none") {
@@ -15,27 +14,30 @@
         var change = document.getElementById("startdeletebutton");
         change.innerHTML="Confirmation: Press again to open account deletion prompt.";
     }
-    </script>
 {% endblock %}
 
 {% block content %}
+    <img src="LITEWATCH_logo.png" alt = "LITEWATCH LOGO" style="width: 200px;height: 200px; position:absolute; bottom: 0px; right: 0px;" >
+
     {% if FailedDelete %}
         <h2>Failed to delete account. Ensure you typed in your username during confirmation correctly. No extra space before or after, case-matching, etc.</h2>
     {% endif %}
     {% if user.is_authenticated %}
-        <h2>{{ user.username }}'s Account Management</h2>
+        <h2>{{ user.username }}'s Account LITE Management</h2>
+        <p>Email: {{ user.email }}</p>
     {% else %}
         <h2>Please login first.</h2>
     {% endif %}
 
     <h3></h3>
-    <button id="startdeletebutton" onclick="myFunction(); change();">Clicking this button will take you through the account deletion process.</button>
+    <p>Clicking this button will take you through the account deletion process.</p>
+    <button id="startdeletebutton" class="theButton" onclick="myFunction(); change();">DELETE ACCOUNT</button>
     <div id="deleteconfirmation" hidden>
         <form action="/" method="POST">
             {% csrf_token %}
             <input type="hidden" name="deleteaccount">
             <p>Please type your username in the text box below and click the delete button. </p>
-            <p>Text box input is case-sensitive.</p>
+            <p>Username details are case-sensitive!</p>
             <p>A final confirmation pop-up will occur.</p>
             <input type="text" name="usernamematch">
             <button type="submit" onclick="return confirm('Are you sure?\nThis will delete your account and all associated data forever.')">Delete</button>

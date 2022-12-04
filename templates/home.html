@@ -1,13 +1,12 @@
 {% extends "base.html" %}
-{% block style %}
-    table {
-        border: 1px solid #333;
-    }
-{% endblock %}
+
+{% block style %}{% endblock %}
+
 {% block title %}LiteWatch{% endblock %}
 
 {% block allmenuitems %}
     {% if user.is_authenticated %}
+
         <a href="instructionpage">Instruction</a>
 
     {%  else %}
@@ -16,10 +15,10 @@
 {%  endblock %}
 
 {% block content %}
-    <h1>This is a user's internal homepage</h1>
-    <p><form action="newsearch"><button type="submit">Create New Search</button></form></p>
-    {{ testText }}
-    <div>
+    <img src="LITEWATCH_logo.png" alt = "LITEWATCH LOGO" style="width: 200px;height: 200px; position:absolute; bottom: 0px; right: 0px;" >
+    <h1>User's LITE findings and records</h1>
+    <p><form action="newsearch"><button type="submit"; class="theButton">Create New Search</button></form></p>
+    <div class="noFont">
     <table>
         <tr>
             <th>Keyword</th>
@@ -46,8 +45,8 @@
                 <td>
                     <form action="/" method="POST">
                         {% csrf_token %}
-                        <input type="hidden" name="deletesearch" value="{{ res.id }}">
-                        <button type="submit" onclick="return confirm('Are you sure?\nDeleting will remove this search and associated results forever.')">Delete</button>
+                        <input type="hidden" class="theButton" name="deletesearch" value="{{ res.id }}">
+                        <button type="submit" class="theButton" onclick="return confirm('Are you sure?\nDeleting will remove this search and associated results forever.')">Delete</button>
                     </form>
                 </td>
             </tr>
