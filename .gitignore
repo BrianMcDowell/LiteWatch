@@ -86,3 +86,4 @@ fabric.properties
 lw/config.py
 litewatch/config.py
 
+sendgrid.env

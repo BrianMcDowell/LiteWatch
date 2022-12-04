@@ -4,8 +4,11 @@ from django.template import loader
 from .forms import NewSearchForm, UserRegisterForm
 from .models import Search, Result
 from django.contrib.auth.models import User
-from .mail import send_mail
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import get_object_or_404
 from .cron import trigger
+from .mail import send_mail
+
 # Create your views here.
 
 
