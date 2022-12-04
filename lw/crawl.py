@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+from .mail import send_mail
 
 
 def collect(url, search_word, elem_type, elem_attr):
@@ -26,3 +27,21 @@ def collect(url, search_word, elem_type, elem_attr):
         print(e)
         return False
 
+
+def test_search(email_address, url, search_word, elem_type, elem_attr):
+    """
+    Simplified version of cron.py to be run from "Create New Search" page.
+    This could be relocated to a different part of the codebase if desired.
+    """
+    found_word = collect(url, search_word, elem_type, elem_attr)
+    if found_word:
+        message_html = ''
+        for f in found_word:
+            message_html += '<h3>' + f[0] + '</h3>'
+            link = '<a clicktracking="off" href="' + f[1] + '">'
+            message_html += link + f[1] + '</a>'
+        if message_html:
+            success_message = 'Great news! We found results in your search for ' \
+                              '"{}" at {}\n'.format(search_word, url)
+            success_message += message_html
+            send_mail(email_address, search_word, success_message)

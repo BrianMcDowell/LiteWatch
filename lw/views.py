@@ -14,7 +14,7 @@ from .cron import trigger
 def index(request):
     """ The 'main' function. If request is POST, performs appropriate task and then circles back as GET"""
 
-    trigger()  # way to debug cron functionality.
+    # trigger()  # way to debug cron functionality.
     # Comment out or remove if not working on cron.
 
     if request.method == "POST":
