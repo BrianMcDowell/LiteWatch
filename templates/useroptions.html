@@ -2,7 +2,6 @@
 
 {% block title %}User Options{% endblock %}
 {% block script %}
-    <script>
     function myFunction() {
         var x = document.getElementById("deleteconfirmation");
         if (x.style.display === "none") {
@@ -15,7 +14,6 @@
         var change = document.getElementById("startdeletebutton");
         change.innerHTML="Confirmation: Press again to open account deletion prompt.";
     }
-    </script>
 {% endblock %}
 
 {% block content %}
