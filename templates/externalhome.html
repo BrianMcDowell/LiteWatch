@@ -1,21 +1,81 @@
 {% extends "base.html" %}
+<style>
+    body { /*Animation comes from: https://www.sliderrevolution.com/coding/css-background-patterns/*/
+        background: linear-gradient(-65deg, #dff024, #70d11b, #11f2ee, #3e7fc9);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+        height: 100vh;
+    }
+    @keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+    h1{
+        font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+        font-size: xxx-large;
+        outline-style: wave;
+        color: black;
+        padding: 5px;
+        border: 15px black;
+        background-color: aquamarine;
+        font-weight: bold;
+    }
 
+    li{
+        font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+        font-size: x-large;
+        font-weight: bold;
+    }
+
+    p{
+        font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+        font-weight: bold;
+        padding: 5px;
+        border: 15px black;
+        background-color: #00FF2D;
+    }
+
+    li{
+        font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+        font-weight: bold;
+        padding: 5px;
+        border: 15px black;
+        background-color: #EBFA05 ;
+    }
+
+
+    {% block style %}{% endblock %}
+</style>
 
 {% block style %}{% endblock %}
 
 
 {% block content %}
-    <h1>About LiteWatch Web Crawler</h1>
-    <p>LiteWatch is a web-crawler program where it surfs through the valid websites and notifies the user of
-    keyword matches it registers.</p>
-    <p></p>
-    <p> Principles of Litewatch: </p>
+    <h1><strong><u>About our program: LITEwatch!</u></strong></h1>
+    <img src="LITEWATCH_logo.png" alt = "LITEWATCH LOGO" style="width: 200px;height: 200px; position:absolute; bottom: 0px; right: 0px;" >
+
+    <p> <em> <b> LiteWatch is a that surfs through a website of your choosing and notifies you of listings it uncovers...
+        Without having to visit the website!! </b></p></em>
+    <br/>
+    <p style="font-size: large; color: black;"> <em> This tool follows the <b style="color: blue"> L.I.T.E. </b> Principles below: </em> </p>
 <ul>
-    <li><b>Look Up - User Inputs Keyword</b></li>
-    <li><b>Investigate - Searches listings matching keyword</b></li>
-    <li><b>Transcribe - Record matching hits</b></li>
-    <li><b>Enunciate - Report Findings to user</b></li>
+    <li><b style="color: blue; font-size: xx-large">L</b><b>ook- Take the given Keyword.</b></li>
+    <li><b style="color: blue; font-size: xx-large">I</b><b>nvestigate - Use the keyword to find items matching the word.</b></li>
+    <li><b style="color: blue; font-size: xx-large">T</b><b>ranscribe - Record matching findings</b></li>
+    <li><b style="color: blue; font-size: xx-large">E</b><b>nunciate - Report discoveries to user</b></li>
 </ul>
+
+    <p> The "Looker-Investigator-Transcriber-Enunciator" watcher tool, aka LITEwatch, will do your search queries for you by crawling through your preferred website to uncover anything
+    that matches your keyword preferences! Once its finished, it will report all those findings for you to reference at any time.</p>
 {% endblock %}
+
+
 
 
