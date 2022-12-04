@@ -3,7 +3,6 @@ from .mail import send_mail
 from .models import Search
 from .models import Result
 from django.contrib.auth.models import User
-from .models import AbstractUser
 
 
 def trigger():

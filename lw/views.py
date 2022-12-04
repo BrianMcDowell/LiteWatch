@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404
 from .cron import trigger
-from .mail import send_mail
+from .crawl import test_search
 
 # Create your views here.
 
@@ -31,7 +31,7 @@ def index(request):
                 return render(request, 'useroptions.html', {'FailedDelete': True})
         elif '_test' in request.POST.keys():
             email = request.user.email
-            # test crawler logic here
+            test_search(email, request.POST['url'], request.POST['keyword'], request.POST['elemtype'], request.POST['elemattr'])
             initial = {
                 'keyword': request.POST['keyword'],
                 'url': request.POST['url'],
