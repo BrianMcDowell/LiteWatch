@@ -24,6 +24,7 @@
     {% endif %}
     {% if user.is_authenticated %}
         <h2>{{ user.username }}'s Account LITE Management</h2>
+        <p>Email: {{ user.email }}</p>
     {% else %}
         <h2>Please login first.</h2>
     {% endif %}
