@@ -26,14 +26,15 @@ def trigger():
             """
             url = s.url
             search_word = s.keyword
-            div_id = 'entry-summary'
+            elem_type = 'div' # change to s.elemtype
+            elem_attr = 'entry-summary' # change to s.elemattr
             past_result_table = Result.objects.all().filter(sourceSearch=s)
             past_hits = []
             if past_result_table:
                 for pr in past_result_table:
                     past_hits.append((pr.sample, pr.url))
 
-            found_word = collect(url, search_word, div_id)
+            found_word = collect(url, search_word, elem_type, elem_attr)
             if found_word:
                 message_html = ''
                 for f in found_word:
@@ -50,5 +51,5 @@ def trigger():
                     send_mail(email_address, search_word, success_message)
                     # comment out to reduce emails during testing
 
-# TODO include search field type and div_id (or other field id) in user provided values
+# TODO lines 29 and 30 point to search database instead of hardcoded values
 # TODO break functionality into reusable code to support calling from other places

@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import re
 
 
-def collect(url, search_word, div_id):
+def collect(url, search_word, elem_type, elem_attr):
     """
     This function performs the webscraping for the project.
     Called from cron.py and views.py
@@ -12,11 +12,11 @@ def collect(url, search_word, div_id):
         soup = BeautifulSoup(requests.get(url).text, "html.parser")
         body = soup.body
 
-        divs = body.find_all('div', attrs={'class', div_id})
+        field = body.find_all(elem_type, attrs={'class', elem_attr})
         found = []
-        for d in divs:
-            if d.find_all('p', string=re.compile(search_word)):
-                anchor = d.find('a')
+        for f in field:
+            if f.find_all('p', string=re.compile(search_word)):
+                anchor = f.find('a')
                 found.append((anchor.get('title'), anchor['href']))
                 # found.append((anchor['href'], anchor.get('title')))
                 # the old way. Delete once the new way works
