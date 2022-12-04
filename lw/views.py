@@ -6,7 +6,6 @@ from .models import Search, Result
 from django.contrib.auth.models import User
 from .mail import send_mail
 from .cron import trigger
-
 # Create your views here.
 
 
@@ -18,6 +17,7 @@ def index(request):
     # trigger()  # way to debug cron functionality.
     # Comment out or remove if not working on cron.
     if request.method == "POST":
+        print(request.POST)
         if 'changestate' in request.POST.keys():
             changesearchstate(request, request.POST['changestate'])
         elif 'deletesearch' in request.POST.keys():
@@ -26,6 +26,16 @@ def index(request):
             check = deleteaccount(request, request.POST['usernamematch'])
             if not check:
                 return render(request, 'useroptions.html', {'FailedDelete': True})
+        elif '_test' in request.POST.keys():
+            # test crawler logic here
+            initial = {
+                'keyword': request.POST['keyword'],
+                'url': request.POST['url'],
+                'elemtype': request.POST['elemtype'],
+                'elemattr': request.POST['elemattr'],
+            }
+            form = NewSearchForm(initial=initial)
+            return render(request, 'newsearch.html', {'form': form})
         else:
             form = NewSearchForm(request.POST or None)
             if not form.is_valid():
@@ -114,7 +124,7 @@ def removesearch(request, searchid):
     """
     this_search = Search.objects.get(id=searchid)
     this_search.delete()
-    this_search.save()
+    #this_search.save()
 
 
 def changesearchstate(request, searchid):
