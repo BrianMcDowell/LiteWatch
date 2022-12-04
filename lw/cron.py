@@ -25,8 +25,8 @@ def trigger():
             """
             url = s.url
             search_word = s.keyword
-            elem_type = 'div' # change to s.elemtype
-            elem_attr = 'entry-summary' # change to s.elemattr
+            elem_type = s.elemtype  # formerly 'div'
+            elem_attr = s.elemattr  # formerly 'entry-summary'
             past_result_table = Result.objects.all().filter(sourceSearch=s)
             past_hits = []
             if past_result_table:
@@ -49,6 +49,3 @@ def trigger():
                     success_message += message_html
                     send_mail(email_address, search_word, success_message)
                     # comment out to reduce emails during testing
-
-# TODO lines 29 and 30 point to search database instead of hardcoded values
-# TODO break functionality into reusable code to support calling from other places
