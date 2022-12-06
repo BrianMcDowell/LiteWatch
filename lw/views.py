@@ -51,6 +51,7 @@ def index(request):
                 the_form = form.save(commit=False)
                 the_form.user_id = request.user.id
                 the_form.save()
+                trigger()
         return HttpResponseRedirect('/')
 
     if request.user.is_authenticated:
