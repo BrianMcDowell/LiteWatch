@@ -70,7 +70,6 @@ class CreateSearchTest(TestCase):
 
     @staticmethod
     def createsearch(
-            self,
             keyword='Bulldog',
             url='https://prodogsdirect.org.uk/category/dogs/',
             user_id=1, state=True):
@@ -97,7 +96,7 @@ class CreateUserTest(TestCase):
     """Tests that new user is added"""
 
     @staticmethod
-    def createuser(self,
+    def createuser(
                    newusername="NewUser",
                    newuseremail="new@user.email",
                    password="password"):
@@ -124,7 +123,7 @@ class UserToSearchForeignKeysTest(TestCase):
     """
 
     @staticmethod
-    def createuser(self, thisuser="thisuser",
+    def createuser(thisuser="thisuser",
                    thisemail="this@email.com",
                    password="Password"):
         """Create user"""
@@ -135,7 +134,7 @@ class UserToSearchForeignKeysTest(TestCase):
         )
 
     @staticmethod
-    def createSearch(self, keyword="keyword",
+    def createSearch(keyword="keyword",
                      url="www.test.com", thisuser="thisuser"):
         """Create search"""
         return Search.objects.create(
@@ -159,7 +158,7 @@ class SearchToResultForeignKeyTest(TestCase):
     """
 
     @staticmethod
-    def createuser(self,
+    def createuser(
                    thisuser="thisuser",
                    thisemail="this@email.com",
                    password="Password"):
@@ -172,7 +171,6 @@ class SearchToResultForeignKeyTest(TestCase):
 
     @staticmethod
     def createSearch(
-            self,
             keyword="keyword",
             url="www.test.com",
             thisuser="thisuser"):
@@ -213,7 +211,7 @@ class CascadingDelete(TestCase):
     """
 
     @staticmethod
-    def createuser(self, thisuser="thisuser",
+    def createuser(thisuser="thisuser",
                    thisemail="this@email.com",
                    password="Password"):
         """Create user"""
@@ -224,7 +222,7 @@ class CascadingDelete(TestCase):
         )
 
     @staticmethod
-    def createSearch(self, keyword="keyword",
+    def createSearch(keyword="keyword",
                      url="www.test.com", thisuser="thisuser"):
         """Create search"""
         return Search.objects.create(
@@ -235,7 +233,7 @@ class CascadingDelete(TestCase):
         )
 
     @staticmethod
-    def createresult(self, sourcesearch, url="www.test.com",
+    def createresult(sourcesearch, url="www.test.com",
                      sample="Some text", sent=True,
                      ):
         """create result"""
