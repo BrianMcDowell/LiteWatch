@@ -5,6 +5,7 @@ from .forms import NewSearchForm, UserRegisterForm
 from .models import Search, Result
 from django.contrib.auth.models import User
 from .crawl import test_search
+from .cron import trigger
 
 # Create your views here.
 
