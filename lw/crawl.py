@@ -1,4 +1,4 @@
-import requests_html
+from requests_html import HTMLSession
 from .mail import send_mail
 
 
@@ -10,7 +10,7 @@ def collect(url: str, search_word: str, elem_type: str = None, elem_attr: str = 
         if elem_attr:
             selector += '.' + elem_attr
 
-        session = requests_html.HTMLSession()
+        session = HTMLSession()
         r = session.get(url)
         r.html.render(wait=5)
 
