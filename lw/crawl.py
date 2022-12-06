@@ -20,10 +20,11 @@ def collect(url: str, search_word: str, elem_type: str = 'div', elem_attr: str =
         for f in field:
             if f.find_all(string=re.compile(search_word)):
                 anchor = f.find('a')
-                text_or_title = anchor.get('title') if anchor.get('title') else anchor.get_text()
+                if anchor.get('title'):
+                    text_or_title = anchor.get('title')
+                else:
+                    text_or_title = anchor.get_text()
                 found.append((text_or_title, anchor['href']))
-                # found.append((anchor['href'], anchor.get('title')))
-                # the old way. Delete once the new way works
         return found
     except Exception as e:
         print(e)
