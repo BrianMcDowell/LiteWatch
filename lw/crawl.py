@@ -1,31 +1,29 @@
-from requests_html import HTMLSession
+import requests
+from bs4 import BeautifulSoup
+import re
 from .mail import send_mail
 
 
-def collect(url: str, search_word: str, elem_type: str = None, elem_attr: str = None):
+def collect(url: str, search_word: str, elem_type: str = 'div', elem_attr: str = None):
+    """
+    This function performs the webscraping for the project.
+    Called from cron.py and views.py
+    """
     try:
-        selector = "div"
-        if elem_type:
-            selector = elem_type
+        soup = BeautifulSoup(requests.get(url, allow_redirects=True, timeout=10).text, "html.parser")
+        body = soup.body
+        selector = elem_type
         if elem_attr:
-            selector += '.' + elem_attr
-
-        session = HTMLSession()
-        r = session.get(url)
-        r.html.render(wait=5)
-
-        res = r.html.find(selector=selector, containing=search_word, clean=True)
+            selector += "." + elem_attr
+        field = body.select(selector)
         found = []
-        for i in res:
-            links = i.find('a')
-            if len(links) > 0:
-                href = links[0].attrs['href']
-                rest = ""
-                for attr in links[0].attrs.keys():
-                    skip = ['href', 'class', 'id', ]
-                    if attr in skip: continue
-                    rest += links[0].attrs[attr] + " "
-                found.append((rest, href))
+        for f in field:
+            if f.find_all(string=re.compile(search_word)):
+                anchor = f.find('a')
+                text_or_title = anchor.get('title') if anchor.get('title') else anchor.get_text()
+                found.append((text_or_title, anchor['href']))
+                # found.append((anchor['href'], anchor.get('title')))
+                # the old way. Delete once the new way works
         return found
     except Exception as e:
         print(e)
