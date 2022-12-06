@@ -6,6 +6,8 @@ from django.conf import settings
 
 
 class Search(models.Model):
+    """Search. References user's id"""
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     keyword = models.CharField(max_length=20)
     url = models.CharField(max_length=50)
@@ -16,6 +18,8 @@ class Search(models.Model):
 
 
 class Result(models.Model):
+    """Result. References search id"""
+
     sourceSearch = models.ForeignKey(Search, on_delete=models.CASCADE)
     url = models.CharField(max_length=255, default="EMPTY URL")
     sent = models.BooleanField(default=False)

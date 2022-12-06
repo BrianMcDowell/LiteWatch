@@ -5,14 +5,17 @@ from .models import Search
 
 
 class NewSearchForm(forms.ModelForm):
+    """New search form"""
+
     class Meta:
         model = Search
         exclude = ('user', 'dateCreated',)
 
 
 class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField()
+    """New user form"""
 
+    email = forms.EmailField()
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
