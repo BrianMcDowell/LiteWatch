@@ -4,9 +4,6 @@ from django.template import loader
 from .forms import NewSearchForm, UserRegisterForm
 from .models import Search, Result
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import get_object_or_404
-from .cron import trigger
 from .crawl import test_search
 
 # Create your views here.
@@ -16,7 +13,7 @@ def index(request):
     """
     The 'main' function. If request is POST, performs appropriate
     task and then circles back as GET
-     """
+    """
     # trigger()  # way to debug cron functionality.
     # Comment out or remove if not working on cron.
     if request.method == "POST":
@@ -31,7 +28,13 @@ def index(request):
                 return render(request, 'useroptions.html', {'FailedDelete': True})
         elif '_test' in request.POST.keys():
             email = request.user.email
-            test_search(email, request.POST['url'], request.POST['keyword'], request.POST['elemtype'], request.POST['elemattr'])
+            test_search(
+                email,
+                request.POST['url'],
+                request.POST['keyword'],
+                request.POST['elemtype'],
+                request.POST['elemattr']
+            )
             initial = {
                 'keyword': request.POST['keyword'],
                 'url': request.POST['url'],
@@ -75,9 +78,7 @@ def index(request):
 
 
 def login(request):
-    """
-    user login
-    """
+    """user login"""
     # https://learndjango.com/tutorials/django-login-and-logout-tutorial
     template = loader.get_template('registration/login.html')
     return HttpResponse(template.render())
@@ -116,6 +117,7 @@ def register(request):
 def newsearch(request):
     """
     Adds a new search into the database
+    Using NewSearchForm
     """
     form = NewSearchForm()
     return render(request, 'newsearch.html', {'form': form})
@@ -128,7 +130,6 @@ def removesearch(request, searchid):
     """
     this_search = Search.objects.get(id=searchid)
     this_search.delete()
-    #this_search.save()
 
 
 def changesearchstate(request, searchid):
@@ -140,21 +141,24 @@ def changesearchstate(request, searchid):
 
 def instructionpage(request):
     """
-    External homepage and instruction page of LiteWatch
+    External homepage and instruction
+    page of LiteWatch
     """
     return render(request, 'externalhome.html', {})
 
 
 def useroptions(request):
     """
-    Loads user options page where user can delete account
+    Loads user options page where
+    user can delete account
     """
     return render(request, 'useroptions.html', {})
 
 
 def deleteaccount(request, usernamematch):
     """
-    Function to delete user's account. Verifies text box input given
+    Function to delete user's account.
+    Verifies text box input given
     """
     thisuser = request.user.username
     if usernamematch == thisuser:

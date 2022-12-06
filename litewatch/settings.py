@@ -94,7 +94,7 @@ if 'test' in argv:
     from .config import TEST_DATABASE_CONFIG
     DATABASES['default'].update(TEST_DATABASE_CONFIG)
 else:
-    if os.environ.get('DATABASE_URL', None):
+    if os.environ.get('DATABASE_URL'):
         import dj_database_url
         db_from_env = dj_database_url.config(
             default=os.environ.get("DATABASE_URL"),
