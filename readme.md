@@ -41,7 +41,7 @@ In this project, a second heroku database was used strictly for testing. If the 
 2. Add a similar 'TEST' dictionary to the previously created DATABASE_CONFIG, using that databases name.
 
 ## Twilio SendGrid setup for local testing
-1.Create config.py file in lw directory
+1. Create config.py file in lw directory
     * Ensure lw/config.py is listed in .gitignore to prevent exposing API Key
 2. Enter the following line:
 >SG_FULL_API_KEY = 'ASSOCIATED API KEY'
