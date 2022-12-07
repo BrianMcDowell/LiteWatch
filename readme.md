@@ -27,7 +27,7 @@ These steps assume use of PostgreSQL database. The original web app used Heroku 
 
 Additional steps for testing
 In this project, a second heroku database was used strictly for testing. If the same setup is used, then the user must create their second database in heroku first, then:
-1. In litewatch/config.py, enter teh following attributes of the postgres database:
+1. In litewatch/config.py, enter the following attributes of the postgres database:
 > TEST_DATABASE_CONFIG = {
 >    'NAME': 'ASSOCIATED NAME',
 >    'USER': 'ASSOCIATED USER',
@@ -40,7 +40,11 @@ In this project, a second heroku database was used strictly for testing. If the 
 >}
 2. Add a similar 'TEST' dictionary to the previously created DATABASE_CONFIG, using that databases name.
 
-
+## Twilio SendGrid setup for local testing
+1.Create config.py file in lw directory
+    * Ensure lw/config.py is listed in .gitignore to prevent exposing API Key
+2. Enter the following line:
+>SG_FULL_API_KEY = 'ASSOCIATED API KEY'
 
 ## Running Locally
 Running locally can vary by IDE/OS. If using PyCharm Professional, simply pressing run in the toolbar will start the server. The user may have to select the Python interpreter and edit the run configuration to run a Django server from the browser when using PyCharm. 
@@ -48,6 +52,7 @@ Otherwise, the steps are as follows:
 1. python ./manage.py migrate
     * Only necessary for first setup or after migrations were made
 2. python ./manage.py runserver
+3. Navigate to localhost IP address (typically http://127.0.0.1:8000/
 
 ## Heroku
 https://litewatch.herokuapp.com/
